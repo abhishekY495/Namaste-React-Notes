@@ -1,0 +1,11 @@
+{
+  "name": "namaste-react-02",
+  "version": "1.0.0",
+  "description": "Igniting our App",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Abhishek",
+  "license": "ISC"
+}
