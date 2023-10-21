@@ -1,3 +1,6 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+
 const myInfo = React.createElement("div", {}, [
   React.createElement("h1", {}, "About Me"),
   React.createElement("p", {}, "Hi, my name is Abhishek"),
