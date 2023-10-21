@@ -1,12 +1,13 @@
 # 02 - Igniting our App
 
 > - [What is `npm` and `npx`](#what-is-npm-and-npx)
-> - [Tilde (~) and carat (^) in `package.json`](#tilde--and-carat--in-packagejson)
+> - [Tilde (~) and Carat (^) in `package.json`](#tilde--and-carat--in-packagejson)
 > - [Difference between `package.json` and `package-lock.json`](#difference-between-packagejson-and-package-lockjson)
 > - [Difference between `devDependencies` and `dependencies`](#difference-between-devdependencies-and-dependencies)
 > - [Transitive dependency](#transitive-dependency)
 > - [What is `.gitignore`](#what-is-gitignore)
 > - [What is Parcel](#what-is-parcel)
+> - [What is Browserslist](#what-is-browserslist)
 
 #
 
@@ -14,19 +15,19 @@
 
 # What is `npm` and `npx`
 
-**`npm`** is the standard package manager for Node.js which gets installed with it. NPM helps to manage packages in your projects as dependencies. You can install a package **locally** i.e for you current local working project or **globally** i.e for your machine using `-g` when installing a package. For example.
+**`npm`** is the standard package manager for Node.js which gets installed with it. NPM helps to manage packages in your projects as dependencies. You can install a package **locally** i.e for your current local working project or **globally** i.e for your machine, using `-g` when installing a package. For example.
 
 ```js
 npm install lodash // local
 npm install -g http-server //global
 ```
 
-> #### Local install will create `node_modules` folder in the project directory and install the packages in it. <br> Global install will install the packages in the `npm` folder, located depending on the Operating System. <br>`npm list -g` to see the location.
+> #### Local install will create a `node_modules` folder in the project directory and install the packages in it. <br> Global install will install the packages in the `npm` folder, located depending on the OS. <br>`npm list -g` to see the location.
 
 ---
 
 **`npx`** is a tool that comes with **npm** version **5.2+** and is used to execute packages without installing them locally or globally.<br>
-When you use `npx` to run a package it will first check if its installed locally and then globally, if not then it will check `npm-cache` folder at `C:/Users/{YourUserName}/AppData/Local/npm-cache` and if its not present, it will install the package in the `npm-cache` folder and run. For example.
+When you use `npx` to run a package, it will first check if its installed locally and then globally, if not then it will check `npm-cache` folder at `C:/Users/{YourUserName}/AppData/Local/npm-cache` and if its not present, it will install the package in the `npm-cache` folder and run. For example.
 
 ```js
 npx create-react-app my-app-name
@@ -40,15 +41,15 @@ This command utilizes `npx` to execute `create-react-app` without the need for a
 
 <br>
 
-# Tilde (~) and carat (^) in `package.json`
+# Tilde (~) and Carat (^) in `package.json`
 
-Package.json is a configuration file for NPM and keeps a track of version number of the packages installed and the versions are written in **`0.0.0`** format, where first number stands for major release, second for the minor release and the third for the patch release / bug fixes.
+Package.json is a configuration file for NPM that keeps track of the version number of the packages installed. The versions are written in **`0.0.0`** format, where the first number stands for a major release, second for a minor release and the third for a patch release / bug fixes.
 
 Tilde **`~`** sign before our version number means that we can accept only a patch release when updating our package.
 
 Caret **`^`** sign means that we can accept minor releases and patch releases, but not a major release when updating our package.
 
-> #### If nothing is present before the version number the exact version will be used.
+> #### If nothing is present before the version number, the exact version will be used.
 
 For example, we are using the **lodash** package in a project. We currently have version `3.8.0` installed. **Lodash** announces a new release with version number `3.9.0`.<br>
 Our `package.json` file looks like below.
@@ -61,7 +62,7 @@ Our `package.json` file looks like below.
 
 When we update our packages, the **lodash** package will not update because we have specified not to accept a minor release using **`~`**
 
-In order to accept this release we will need to change the **`~`** to **`^`** like below.
+In order to accept this release, we will need to change the **`~`** to **`^`** like below.
 
 ```json
 "dependencies": {
@@ -75,9 +76,9 @@ In order to accept this release we will need to change the **`~`** to **`^`** li
 
 # Difference between `package.json` and `package-lock.json`
 
-**`package.json`** contains information about the project such as its name, version, author, and license. It also lists the project's dependencies on other Node.js packages, along with their version numbers, so that these dependencies can be automatically installed when the project is set up or updated.
+**`package.json`** contains information about the project, such as its name, version, author, and license. It also lists the project's dependencies on other Node.js packages, along with their version numbers, so that these dependencies can be automatically installed when the project is set up or updated.
 
-**`package-lock.json`** on the other hand contains information about the dependencies/packages with their exact version numbers that were installed for a node.js project. It helps different developers working on the same repo to install the exact package versions installed previously, even if the packages have released new versions. This ensures the same **`node_modules`** across different machines/environments. This file is automatically generated or updated when there is a change in either the **`node_modules`** or package.json file.
+**`package-lock.json`** on the other hand, contains information about the dependencies/packages with their exact version numbers that were installed for a node.js project. It helps different developers working on the same repo to install the exact package versions installed previously, even if the packages have released new versions. This ensures the same **`node_modules`** across different machines and environments. This file is automatically generated or updated when there is a change in either the **`node_modules`** or package.json file.
 
 > https://medium.com/helpshift-engineering/package-lock-json-the-complete-guide-2ae40175ebdd
 
@@ -87,9 +88,9 @@ In order to accept this release we will need to change the **`~`** to **`^`** li
 
 # Difference between `devDependencies` and `dependencies`
 
-When you install an npm package using **`npm install <package-name>`**, you are installing it as a dependency. The package is automatically listed in the `package.json` file, under the **`dependencies`** list. These are the packages our project needs to be able to work in production. For example - react, react-dom, uuid, etc.
+When you install an npm package using **`npm install <package-name>`**, you are installing it as a dependency. The package is automatically listed in the `package.json` file, under the **`dependencies`** list. These are the packages our project needs to be able to work in production. For example - `react`, `react-dom`, `uuid`, etc.
 
-When you add the **`-D`** flag, or **`--save-dev`**, you are installing it as a development dependency, which adds it to the **`devDependencies`** list. These packages are only required when developing our apps. For example - tailwindcss, jest, parcel, etc.
+When you add the **`-D`** flag, or **`--save-dev`**, you are installing it as a development dependency, which adds it to the **`devDependencies`** list. These packages are only required when developing our apps. For example - `tailwindcss`, `jest`, `parcel`, etc.
 
 > https://flaviocopes.com/npm-dependencies-devdependencies
 
@@ -109,7 +110,7 @@ A **Transitive dependency** refers to a dependency that is indirectly required b
 
 **`.gitignore`** is a configuration file used in git version control to specify files and directories that should be ignored when tracking changes in a Git repository. When you create a git repository for your project, git automatically tracks changes to all the files in the repository. However, there are often files or directories that you don't want to include, such as log files, files containing sensitive information, and temporary files.
 
-By creating a **`.gitignore`** file in your git repository, you can list the files, directories, or file patterns that you want git to ignore. These ignored files will not be staged, committed, or tracked by git. The **`.gitignore`** file uses simple pattern matching to determine which files or directories to ignore. See below **`.gitignore`** file for example.
+By creating a **`.gitignore`** file in your git repository, you can list the files, directories, or file patterns that you want git to ignore. These ignored files will not be staged, committed, or tracked by git. The **`.gitignore`** file uses simple pattern matching to determine which files or directories to ignore. See the below **`.gitignore`** file for example.
 
 ```js
 *.log
@@ -123,6 +124,28 @@ By creating a **`.gitignore`** file in your git repository, you can list the fil
 <br>
 
 # What is Parcel
+
+[**Parcel.js**](https://parceljs.org) is an open-source bundler. When developing a site or web application, it’s good practice to separate your code into smaller, more manageable chunks. In production, requesting all of your resources individually can slow down your application. A bundler is a tool used to solve this issue by combining and merging your code into a single file. This limits the number of HTTP requests to a server for those resources. Using a bundler is useful for optimizing the experience for both the user and developer.
+
+Parcel requires zero configuration, meaning it requires minimal configuration from developers to bundle and optimize their web application's files for production. Apart from bundling, it comes with a bunch of features as well.
+
+- **Dev server** - It offers a built-in development server that allows developers to serve their applications locally, supporting HMR, HTTPS, an API proxy, and more, providing a convenient environment for testing and debugging.
+- **Hot Module Replacement (HMR)** - When you make a change, Parcel automatically updates your code in the browser, no page reload necessary. Parcel automatically rebuilds the changed files and updates your app in the browser. By default, Parcel fully reloads the page, but in some cases it may perform **HMR** which improves the development experience by updating modules in the browser at runtime without needing a whole page refresh. This means that the application state can be retained as you change small things in your code.
+- **Image optimization** - Parcel includes an image transformer out of the box, which allows you to resize images, convert them to a different format, or adjust the quality to reduce file size. This can be done using query parameters when referencing the image or using a configuration file.
+- **Error and Diagnostics** - If you make an error in your code or configuration, Parcel displays beautiful diagnostics in your terminal and in the browser. Every error includes a syntax highlighted code frame pointing to the exact location where the error occurred, along with hints about how to fix the issue. Many diagnostics even include a documentation link where you can learn more.
+- **Caching** - Parcel caches everything it builds to disk. If you restart the dev server, Parcel will only rebuild files that have changed since the last time it ran. Parcel automatically tracks all of the files, configuration, plugins, and dev dependencies that are involved in your build and granularly invalidates the cache when something changes.
+- **Tree shaking** - Tree shaking is a term commonly used within a JavaScript context to describe the removal of dead code. It relies on the `import` and `export` statements to detect if code modules are exported and imported for use between JavaScript files. Parcel analyzes the **imports** and **exports** of each module and removes everything that isn't used, reducing the application's size and improving loading times.
+- **Code splitting** - Parcel supports zero configuration code splitting out of the box. This allows you to split your application code into separate bundles which can be loaded on demand, resulting in smaller initial bundle sizes and faster load times.
+
+#
+
+<br>
+
+# What is Browserslist
+
+**Browserslist** is a tool that allows specifying which browsers should be supported between different front-end tools. By specifying the browsers you want to support, you can ensure that your web applications and websites work correctly and consistently across different platforms and devices.
+
+**Browserslist** is commonly used in the front-end development community and is supported by various tools and libraries, including Autoprefixer, which automatically adds vendor prefixes to your CSS based on the specified browser compatibility. This helps developers avoid writing extensive and complex CSS rules to support different browser versions, making the development process more efficient.
 
 #
 
