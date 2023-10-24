@@ -4,7 +4,7 @@
 > - [npm scripts](#npm-scripts)
 > - [JSX](#jsx)
 > - [What is Babel](#what-is-babel)
-> - [React Component](#)
+> - [React Component](#react-component)
 
 #
 
@@ -113,13 +113,18 @@ Developers typically use **Babel** as part of their build process. They write co
 
 > **Class components** is an older way of writing React components, so we will look into that later.
 
-**Functional components** is the newer and more concise way of writing a React Component. They are just JavaScript functions that take props (short for properties) as arguments and return a React element.
+**Functional components** is the newer and more concise way of writing a React Component. They are just JavaScript functions that take **props** (short for properties) as arguments and return a React element.
 
 - Creating a component
 
 ```js
-const GreetUser = () => {
-  return <div>Namaste React 🚀</div>;
+const GreetUser = (props) => {
+  return <div>Hello {props.name ? props.name : "User"}</div>;
+};
+
+// Destructuring
+const GreetUser = ({ name }) => {
+  return <div>Hello {name ? name : "User"}</div>;
 };
 ```
 
@@ -127,5 +132,5 @@ const GreetUser = () => {
 
 ```js
 const root = ReactDOM.createRoot(document.querySelector("#root"));
-root.render(<GreetUser />);
+root.render(<GreetUser name="Abhishek" />);
 ```
