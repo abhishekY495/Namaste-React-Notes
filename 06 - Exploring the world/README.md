@@ -23,6 +23,10 @@
 
 The **`useEffect`** Hook is called after every render of the component and it takes two arguments, a callback function and an optional dependency array.
 
+- If you omit the dependency array, the effect will run after every render and re-render.
+- If you pass an empty array, the effect will run once after the initial render.
+- If you provide values in the dependency array, the effect will run whenever any of those values change.
+
 Below is an example of fetching data from an API.
 
 ```js
